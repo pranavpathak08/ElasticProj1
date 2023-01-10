@@ -28,7 +28,6 @@ const api = {
   },
   async search(query) {
     const response = await axios.get(`/api/search?query=${query}`);
-
     return response.data;
   },
   async getAllPosts() {
@@ -38,7 +37,6 @@ const api = {
   },
   async isAuthenticated() {
     const response = await axios.get("/api/is-authenticated");
-
     return response.data;
   },
 };
@@ -59,8 +57,14 @@ const columns = [
     field: "content",
     headerName: "Content",
     flex: 1,
-    minWidth: 150,
+    minWidth: 200,
   },
+  {
+    field: "date",
+    headerName: "Date",
+    flex: 1,
+    minWidth: 200,
+  }
 ];
 const TopMenu = (props) => {
   return (
@@ -76,8 +80,8 @@ const TopMenu = (props) => {
               </Button>
             </>
           ) : (
-            <Button color="inherit" href="/api/login">
-              Login
+            <Button color="inherit" href="http://localhost:5000/login">
+                Logout
             </Button>
           )}
         </Toolbar>
@@ -117,6 +121,7 @@ const App = () => {
       title: faker.lorem.lines(1),
       content: faker.lorem.paragraphs(3),
       author: faker.name.findName(),
+      date: faker.date.past(2)
     };
     const response = await api.addPost(post);
     setPosts([...posts, { ...post, id: response._id }]);
